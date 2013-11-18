@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+unsigned char str_vaild = 1;
+unsigned long _strlen(const char* s)
+{
+  if (s == NULL)
+  {
+    str_valid = 0;
+    return 0;
+  }
+    char* sc = NULL;
+  for (sc = s; *sc != '\0'; ++sc) ;
+  return sc - s;
+}
+
+int main(void)
+{
+  char* str_empty = "";
+  char* str_null  = NULL;
+  char* str_hello = "hello";
+  return 0;
+}

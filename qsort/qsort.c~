@@ -1,0 +1,80 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+#define ElemType int
+#define N         20
+
+void _swap(void* vp1, void* vp2, unsigned int size)
+{
+  if (vp1 == NULL || vp2 == NULL || vp1 == vp2)
+    return ;
+  char buff[size];
+  memcpy(buff, vp1, size);
+  memcpy(vp1, vp2, size);
+  memcpy(vp2, buff, size);
+}
+
+void median(ElemType* a, int l, int r)
+{
+  int m = (l+r) >> 1;
+  if (a[r] < a[l]) _swap(&a[r], &a[l], sizeof(ElemType));
+  if (a[r] < a[m]) _swap(&a[r], &a[m], sizeof(ElemType));
+  if (a[m] < a[l]) _swap(&a[l], &a[m], sizeof(ElemType));
+
+}
+
+int partition(ElemType* a, int l, int r)
+{
+  if (a == NULL)
+    return -1;
+  
+  int i, j;
+  for (i = l+1, j = l; i < r; ++i)
+  {
+    if (a[i] < a[l]) _swap(&a[i], &a[++j], sizeof(ElemType));
+  }
+  _swap(&a[j], &a[l], sizeof(ElemType));
+  
+  return j;
+      
+}
+
+void _qsort(ElemType* a, int l, int r)
+{
+  if (l >= r)
+    return ;
+  median(a, l, r-1);
+  int k = partition(a, l, r);
+  _qsort(a, l, k);
+  _qsort(a, k+1, r);
+}
+
+int main(void)
+{
+  srand(time(NULL));
+  ElemType array[N];
+  int i;
+  for (i = 0; i < N; ++i)
+  {
+    array[i] = rand() % 100;
+  }
+
+  for (i = 0; i < N; ++i)
+  {
+    printf("%3d ", array[i]);
+  }
+  printf("\n");
+
+  //partition(array, 0, N);
+  _qsort(array, 0, N);
+
+  for (i = 0; i < N; ++i)
+  {
+    printf("%3d ", array[i]);
+  }
+  printf("\n");
+
+  return 0;
+}

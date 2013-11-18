@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+#define ElemType int
+#define N         30
+
+void merge(ElemType* a, unsigned int l, unsigned int m, unsigned int r)
+{
+  ElemType b[N];
+  unsigned int i, j, k;
+  for (i = l; i < N; ++i)
+  {
+    b[i] = a[i];
+  }
+  i = l;
+  j = m+1;
+  k = l;
+  while (i <= m && j <= r)
+  {
+    if (b[i] < b[j]) a[k++] = b[i++];
+    else             a[k++] = b[j++];
+  }
+
+  while (i <= m) a[k++] = b[i++];
+  
+}
+
+void merge_sort(ElemType* a, unsigned int l, unsigned int r)
+{
+  if (a == NULL || l >= r)
+    return ;
+  //int m = (l+r-1) >> 1;
+  unsigned int m = (l&r) + ((l^r)>>1);
+  merge_sort(a, l, m);
+  merge_sort(a, m+1, r);
+  merge(a, l, m, r);
+}
+
+int main(void)
+{
+  srand(time(NULL));
+  ElemType a[N];
+  int i;
+  for (i = 0; i < N; ++i)
+  {
+    a[i] = rand()%100;
+  }
+
+  for (i = 0; i < N; ++i)
+  {
+    printf("%3d ", a[i]);
+  }
+  printf("\n");
+
+  merge_sort(a, 0, N-1);
+
+  for (i = 0; i < N; ++i)
+  {
+    printf("%3d ", a[i]);
+  }
+  printf("\n");
+
+  return 0;
+}

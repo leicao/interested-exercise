@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+#define ElemType int
+
+void _swap(void* vp1, void* vp2, unsigned int size)
+{
+  if (vp1 == NULL || vp2 == NULL || vp1 == vp2 || size == 0)
+    return ;
+  char buff[size];
+  memcpy(
+}
+
+void select_sort(ElemType* a, int l, int r)
+{
+  if (a == NULL || l >= r)
+    return ;
+  
+}
+
+int main(void)
+{
+  return 0;
+}

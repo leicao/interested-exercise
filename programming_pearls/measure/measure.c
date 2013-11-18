@@ -1,0 +1,78 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MEASURE(T, test)                                   \
+{                                                          \
+ printf(test);		                                   \
+ printf("\t%lu\t", sizeof(T));                             \
+ unsigned long lastp = 0;                                  \
+ int i;                                                    \
+ for (i = 0; i < 11; ++i)                                  \
+ {                                                         \
+   T* p = (T*)malloc(sizeof(T));                           \
+   unsigned long thisp = (unsigned long)p;                 \
+   if (lastp != 0)                                         \
+     printf("%lu ", thisp-lastp);                          \
+   lastp = thisp;                                          \
+ }                                                         \
+ printf("\n");                                             \
+}
+
+struct structc
+{
+  char c;
+};
+
+struct structic
+{
+  int i;
+  char c;
+};
+
+struct structip
+{
+  int c;
+  struct structip* p;
+};
+
+struct structdc
+{
+  double d;
+  char c;
+};
+
+struct structc12
+{
+  char c[12];
+};
+
+struct structc32
+{
+  char c[32];
+};
+
+struct structc48
+{
+  char c[48];
+};
+
+
+int main(void)
+{
+  MEASURE(int, "int");
+  MEASURE(char, "char");
+  MEASURE(float, "float"); 
+  MEASURE(long, "long"); 
+  MEASURE(double, "double");
+
+  MEASURE(struct structc, "struct structc");
+  MEASURE(struct structic, "struct structic");
+  MEASURE(struct structip, "struct structip");
+  MEASURE(struct structdc, "struct structdc");
+  MEASURE(struct structc12, "struct structc12");
+  MEASURE(struct structc32, "struct structc32");
+  MEASURE(struct structc48, "struct structc48");
+  
+ 
+  return 0;
+}
